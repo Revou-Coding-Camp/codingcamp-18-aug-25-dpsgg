@@ -1,22 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do List</title>
-    <link rel="stylesheet" href="Css/style.css">
+    <title>To-do List</title>
+
+    <!-- CSS External -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
-    <div class="container">
-        <h1>To Do List</h1>
-        <form id="todo-form">
-            <input type="text" id="todo-input" placeholder="Add a new task..." required>
-            <button type="submit">Add</button>
+
+<body class="justify-items-center h-200 content-center">
+
+    <!-- Hero Website -->
+    <header>
+        <h1 class="text-4xl font-bold mb-50">To-Do List</h1>
+        <div class="flex">
+            <div class="total-do">Total Do</div>
+            <div class="completed-do">Completed</div>
+            <div class="pending-do">Pending</div>
+        </div>  
+    </header>
+
+    <!-- Main Content, Todo List Form, List Todo -->
+    <main>
+        <form>
+            <input type="text" id="task-input" placeholder="Add a new task" class="border p-2 rounded">
+            <input type="date" id="due-date-input" class="border p-2 rounded">
+            <button type="button" onclick="validateForm();" class="bg-blue-500 text-white p-[8px] rounded">Add</button>
         </form>
-        <ul id="todo-list"></ul>
-    </div>
-    
+
+        <!-- Action button section -->
+        <section class="p-2 flex flex-col" >
+            <button class="bg-green-500 text-white p-2 rounded">Filter</button>
+            <button onclick="deleteAll()" class="bg-red-500 text-white p-2 rounded">Delete All</button>
+        </section>
+
+        <!-- List of Task -->
+        <section>
+            <header>
+                <h2 class="text-2xl font-semibold">Tasks</h2>
+            </header>
+
+            <ul class="my-4" id="task-list">
+                <h3>None</h3>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <span></span>
+    </footer>
+
+    <!-- JS External -->
     <script src="js/script.js"></script>
 
 </body>
+
 </html>
