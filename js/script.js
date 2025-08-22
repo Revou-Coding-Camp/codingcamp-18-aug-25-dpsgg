@@ -1,18 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // === DOM ELEMENTS ===
     const todoForm = document.getElementById('todo-form');
     const todoInput = document.getElementById('todo-input');
     const dueDateInput = document.getElementById('due-date-input');
     const todoList = document.getElementById('todo-list');
     const filterButtons = document.getElementById('filter-buttons');
-    const deleteAllBtn = document.getElementById('delete-all-btn'); // Tombol baru
+    const deleteAllBtn = document.getElementById('delete-all-btn');
     
-    // Statistics Elements
     const totalTasksEl = document.getElementById('total-tasks');
     const pendingTasksEl = document.getElementById('pending-tasks');
     const completedTasksEl = document.getElementById('completed-tasks');
 
-    // === STATE MANAGEMENT ===
     let todos = JSON.parse(localStorage.getItem('todos')) || [];
     let currentFilter = 'all';
 
@@ -20,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('todos', JSON.stringify(todos));
     };
 
-    // === RENDERING LOGIC ===
     const renderTodos = () => {
         todoList.innerHTML = ''; 
 
@@ -49,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateStats();
         updateFilterButtons();
         
-        // Sembunyikan tombol delete all jika tidak ada tugas
         deleteAllBtn.style.display = todos.length > 0 ? 'block' : 'none';
     };
 
@@ -119,7 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // === ACTIONS & EVENT HANDLERS ===
     
     const handleAddTask = (e) => {
         e.preventDefault();
@@ -141,11 +135,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (todo) { todo.completed = !todo.completed; saveTodos(); renderTodos(); }
     };
 
-    // **FUNGSI DELETE YANG DIPERBAIKI**
     const deleteTodo = (id) => {
-        // Konfirmasi sebelum menghapus
         if (confirm('Are you sure you want to delete this task?')) {
-            // Filter array untuk menghapus todo dengan id yang sesuai
             todos = todos.filter(todo => todo.id !== id);
             saveTodos();
             renderTodos();
@@ -181,16 +172,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target.matches('.filter-btn')) { currentFilter = e.target.dataset.filter; renderTodos(); }
     };
 
-    // **FUNGSI BARU UNTUK DELETE ALL**
     const handleDeleteAll = () => {
         if (todos.length > 0 && confirm('Are you sure you want to delete ALL tasks? This action cannot be undone.')) {
-            todos = []; // Kosongkan array
+            todos = [];
             saveTodos();
             renderTodos();
         }
     };
 
-    // === INITIALIZATION ===
     const setDefaultDate = () => {
         const today = new Date();
         today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
@@ -199,10 +188,9 @@ document.addEventListener('DOMContentLoaded', () => {
         dueDateInput.min = todayString;
     };
     
-    // Tambahkan event listener untuk tombol baru
     deleteAllBtn.addEventListener('click', handleDeleteAll);
     todoForm.addEventListener('submit', handleAddTask);
     filterButtons.addEventListener('click', handleFilterClick);
     setDefaultDate();
-    renderTodos(); // Initial render
+    renderTodos();
 });
