@@ -1,63 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-do List</title>
-
-    <!-- CSS External -->
-    <link rel="stylesheet" href="css/style.css">
-
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>To-Do List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+<body class="bg-gray-100 font-sans">
 
-<body class="justify-items-center h-200 content-center">
-
-    <!-- Hero Website -->
-    <header>
-        <h1 class="text-4xl font-bold mb-50">To-Do List</h1>
-        <div class="flex">
-            <div class="total-do">Total Do</div>
-            <div class="completed-do">Completed</div>
-            <div class="pending-do">Pending</div>
-        </div>  
-    </header>
-
-    <!-- Main Content, Todo List Form, List Todo -->
-    <main>
-        <form>
-            <input type="text" id="task-input" placeholder="Add a new task" class="border p-2 rounded">
-            <input type="date" id="due-date-input" class="border p-2 rounded">
-            <button type="button" onclick="validateForm();" class="bg-blue-500 text-white p-[8px] rounded">Add</button>
-        </form>
-
-        <!-- Action button section -->
-        <section class="p-2 flex flex-col" >
-            <button class="bg-green-500 text-white p-2 rounded">Filter</button>
-            <button onclick="deleteAll()" class="bg-red-500 text-white p-2 rounded">Delete All</button>
-        </section>
-
-        <!-- List of Task -->
-        <section>
-            <header>
-                <h2 class="text-2xl font-semibold">Tasks</h2>
+    <div class="w-full min-h-screen p-4 sm:p-6 md:p-10">
+        <div class="container mx-auto max-w-3xl bg-white rounded-lg shadow-xl p-4 sm:p-6">
+            
+            <header class="text-center mb-6 sm:mb-8">
+                <h1 class="text-3xl sm:text-4xl font-bold text-gray-800">To-Do List</h1>
+                <p class="text-gray-500 text-sm sm:text-base">Organize, Filter, and Accomplish.</p>
             </header>
-
-            <ul class="my-4" id="task-list">
-                <h3>None</h3>
-            </ul>
-        </section>
-    </main>
-
-    <footer>
-        <span></span>
-    </footer>
-
-    <!-- JS External -->
+    
+            <main>
+                <form id="todo-form" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 items-end">
+                    <div class="md:col-span-2">
+                        <label for="todo-input" class="block text-sm font-medium text-gray-700 mb-1">Task Name</label>
+                        <input type="text" id="todo-input" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="What do you need to do?" autocomplete="off">
+                    </div>
+                    <div>
+                        <label for="due-date-input" class="block text-sm font-medium text-gray-700 mb-1">Due Date</label>
+                        <input type="date" id="due-date-input" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <button type="submit" class="md:col-span-3 w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-plus mr-2"></i>Add Task
+                    </button>
+                </form>
+    
+                <div id="task-stats" class="grid grid-cols-3 gap-2 sm:gap-4 text-center mb-6">
+                    <div class="p-2 sm:p-4 bg-gray-200 rounded-lg">
+                        <h3 class="font-bold text-gray-700 text-xs sm:text-sm">Total Tasks</h3>
+                        <p id="total-tasks" class="text-xl sm:text-2xl font-semibold">0</p>
+                    </div>
+                    <div class="p-2 sm:p-4 bg-yellow-100 rounded-lg">
+                        <h3 class="font-bold text-yellow-800 text-xs sm:text-sm">Pending</h3>
+                        <p id="pending-tasks" class="text-xl sm:text-2xl font-semibold">0</p>
+                    </div>
+                    <div class="p-2 sm:p-4 bg-green-100 rounded-lg">
+                        <h3 class="font-bold text-green-800 text-xs sm:text-sm">Completed</h3>
+                        <p id="completed-tasks" class="text-xl sm:text-2xl font-semibold">0</p>
+                    </div>
+                </div>
+    
+                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+                    <div id="filter-buttons" class="flex justify-center gap-2 sm:gap-4 w-full sm:w-auto">
+                        <button data-filter="all" class="filter-btn bg-blue-500 text-white px-3 sm:px-4 py-2 rounded-lg text-sm w-full">All</button>
+                        <button data-filter="pending" class="filter-btn bg-gray-300 text-gray-700 px-3 sm:px-4 py-2 rounded-lg text-sm w-full">Pending</button>
+                        <button data-filter="completed" class="filter-btn bg-gray-300 text-gray-700 px-3 sm:px-4 py-2 rounded-lg text-sm w-full">Completed</button>
+                    </div>
+                    <button id="delete-all-btn" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors w-full sm:w-auto text-sm">
+                        <i class="fas fa-trash-alt mr-2"></i>Delete All
+                    </button>
+                </div>
+    
+                <div id="todo-list" class="space-y-4">
+                </div>
+            </main>
+    
+            <footer class="text-center mt-8 text-gray-400 text-sm">
+                <p>&copy; 2025 - Muhammad Daffa Abdul Mufid</p>
+            </footer>
+        </div>
+    </div>
     <script src="js/script.js"></script>
-
 </body>
-
 </html>
